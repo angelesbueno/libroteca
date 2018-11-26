@@ -1,5 +1,5 @@
 # Libroteca 
-## Realizado por: Ángeleles Bueno Aguilar, 2º DAW IES Campanillas
+## Realizado por: Ángeleles Bueno Aguilar, 2º DAW IES Campanillas.
 
 Aplicación web PHP para la consulta de libros previamente adquiridos de la API Google Books.
 
