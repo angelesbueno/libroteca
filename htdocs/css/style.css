@@ -1,0 +1,158 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+.body-index {
+  background-image: url("img/background.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.nav-propia {
+  height: 115px!important;
+  
+}
+
+.wrapper-form-reg {
+  margin: 100px;
+  padding-left: 35px;
+}
+
+.form-login {
+  margin-top: 200px;
+  margin-bottom: 200px;
+  margin-left: 100px!important;
+  margin-right: 100px!important;
+  text-align: center;
+}
+
+.form-login-div {
+  margin: 15px 278px!important;
+}
+
+.label-generos {
+  font-size: 1rem!important;
+  margin-left: 332px;
+}
+
+.generos-p {
+  margin-left: 332px!important;
+}
+
+.div-btn-submit {
+  text-align: center;
+  margin: 30px;
+}
+
+.btn-submit {
+  background-color: #2196f3;
+}
+
+.btn-submit:hover {
+  background-color: #4caf50;
+}
+
+.logo {
+  max-height: 120px!important;
+  position: relative;
+  left: 20px;
+  top: -5px;
+}
+
+.tab1 {
+  padding-left: 558px!important;
+}
+
+.hola-usr {
+  padding: 0 15px;
+}
+
+.nav-extended {
+  background-color: #4caf50!important;
+}
+
+.container1 {
+  text-align: center;
+  padding: 50px 0!important;
+  
+}
+
+.btn {
+  background-color: #00b241!important;
+}
+
+.btn-fav {
+  background-color: gold!important;
+  color: darkred!important;
+  cursor: default;
+}
+
+.btn-nofav {
+  background-color: #4c89f7!important;
+}
+
+#contenido img {
+  width: 200px;
+  height: 318.75px;
+}
+
+#principal img {
+  width: 200px;
+  height: 318.75px;
+}
+
+#contenido .col.s4 {
+  margin-bottom: 50px!important;
+}
+
+.tarjeta {
+  width: 100%!important;
+}
+
+.nav-pags {
+  position: relative;
+  left: 535px;
+  top: 30px;
+}
+
+.nav-pags a {
+  font-size: 30pt;
+}
+
+.nav-2 {
+  position: relative;
+  top: 27px;
+}
+
+.btn-editar {
+  display: inline-block;
+  text-align: center;
+  top: 25px;
+  display: inline-block;
+  position: relative;
+  left: 454px;
+}
+
+#libro-borrado {
+  color: #f32929;
+  text-align: center;
+  position: relative;
+  top: 50px;
+  margin: 0;
+}
+
+.footer-propio {
+  padding-bottom: 15.4px;
+  background-color: #4caf50!important;
+}
