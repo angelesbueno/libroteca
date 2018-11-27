@@ -1,38 +1,39 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
--- https://www.phpmyadmin.net/
+-- version 3.5.8.2
+-- http://www.phpmyadmin.net
 --
--- Host: localhost:8889
--- Generation Time: Nov 22, 2018 at 12:07 PM
--- Server version: 5.7.23
--- PHP Version: 7.2.8
+-- Servidor: sql111.epizy.com
+-- Tiempo de generación: 27-11-2018 a las 03:15:21
+-- Versión del servidor: 5.6.41-84.1
+-- Versión de PHP: 5.3.3
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
 
 --
--- Database: `libroteca`
+-- Base de datos: `epiz_23053888_libroteca`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `autor`
+-- Estructura de tabla para la tabla `autor`
 --
 
-CREATE TABLE `autor` (
-  `idAutor` int(11) NOT NULL,
-  `nombre` varchar(100) NOT NULL DEFAULT 'Desconocido'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `autor` (
+  `idAutor` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(100) NOT NULL DEFAULT 'Desconocido',
+  PRIMARY KEY (`idAutor`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=231 ;
 
 --
--- Dumping data for table `autor`
+-- Volcado de datos para la tabla `autor`
 --
 
 INSERT INTO `autor` (`idAutor`, `nombre`) VALUES
@@ -79,35 +80,51 @@ INSERT INTO `autor` (`idAutor`, `nombre`) VALUES
 (215, 'Kingsley Amis'),
 (216, 'Gabriela Wiener'),
 (217, 'Négar Djavadi'),
-(218, 'Pablo Aranda');
+(218, 'Pablo Aranda'),
+(219, 'Christopher Pollinini'),
+(220, 'Berónica Pozo Viteri'),
+(221, 'Pedro Aguado Bleye'),
+(222, 'Antoni de Bofarull'),
+(223, 'Gregorio Marañón'),
+(224, 'Stephanie Danler'),
+(225, 'Alessandro Marzo Magno'),
+(226, 'Paul Beatty'),
+(227, 'Bob Dylan'),
+(228, 'Philip Glass'),
+(229, 'Mina Holland'),
+(230, 'Thug Kitchen');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `comentario`
+-- Estructura de tabla para la tabla `comentario`
 --
 
-CREATE TABLE `comentario` (
-  `idComentario` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `comentario` (
+  `idComentario` int(11) NOT NULL AUTO_INCREMENT,
   `idusuario` int(11) NOT NULL,
   `idLibro` int(11) NOT NULL,
   `fecha` date NOT NULL,
-  `comentario` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `comentario` text NOT NULL,
+  PRIMARY KEY (`idComentario`),
+  KEY `fk_comentario_libro` (`idLibro`),
+  KEY `fk_comentario_usuario` (`idusuario`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `editorial`
+-- Estructura de tabla para la tabla `editorial`
 --
 
-CREATE TABLE `editorial` (
-  `idEditorial` int(11) NOT NULL,
-  `editorial` varchar(100) NOT NULL DEFAULT 'Otros'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `editorial` (
+  `idEditorial` int(11) NOT NULL AUTO_INCREMENT,
+  `editorial` varchar(100) NOT NULL DEFAULT 'Otros',
+  PRIMARY KEY (`idEditorial`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=65 ;
 
 --
--- Dumping data for table `editorial`
+-- Volcado de datos para la tabla `editorial`
 --
 
 INSERT INTO `editorial` (`idEditorial`, `editorial`) VALUES
@@ -128,43 +145,48 @@ INSERT INTO `editorial` (`idEditorial`, `editorial`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `favoritos`
+-- Estructura de tabla para la tabla `favoritos`
 --
 
-CREATE TABLE `favoritos` (
+CREATE TABLE IF NOT EXISTS `favoritos` (
   `idUsuario` int(11) NOT NULL,
-  `idLibro` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `idLibro` int(11) NOT NULL,
+  PRIMARY KEY (`idUsuario`,`idLibro`),
+  KEY `fk_favoritos_libro` (`idLibro`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `favoritos`
+-- Volcado de datos para la tabla `favoritos`
 --
 
 INSERT INTO `favoritos` (`idUsuario`, `idLibro`) VALUES
-(32, 184),
-(34, 184),
-(32, 185),
-(34, 185),
-(32, 186),
-(32, 187),
-(32, 188),
-(34, 188),
-(32, 189),
-(33, 189);
+(32, 198),
+(32, 206),
+(32, 207),
+(32, 210),
+(33, 195),
+(34, 199),
+(34, 200),
+(34, 205),
+(34, 207),
+(34, 226),
+(36, 184),
+(36, 188);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `genero`
+-- Estructura de tabla para la tabla `genero`
 --
 
-CREATE TABLE `genero` (
-  `idGenero` int(11) NOT NULL,
-  `genero` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `genero` (
+  `idGenero` int(11) NOT NULL AUTO_INCREMENT,
+  `genero` varchar(50) NOT NULL,
+  PRIMARY KEY (`idGenero`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=122 ;
 
 --
--- Dumping data for table `genero`
+-- Volcado de datos para la tabla `genero`
 --
 
 INSERT INTO `genero` (`idGenero`, `genero`) VALUES
@@ -194,52 +216,65 @@ INSERT INTO `genero` (`idGenero`, `genero`) VALUES
 (116, 'Family & Relationships'),
 (117, 'Crafts & Hobbies'),
 (118, 'Religion'),
-(119, 'Erotic poetry, Spanish');
+(119, 'Erotic poetry, Spanish'),
+(120, 'Català'),
+(121, 'Don Juan (Legendary character)');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `genero_usuario`
+-- Estructura de tabla para la tabla `genero_usuario`
 --
 
-CREATE TABLE `genero_usuario` (
+CREATE TABLE IF NOT EXISTS `genero_usuario` (
   `idUsuario` int(11) NOT NULL,
-  `idGenero` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `idGenero` int(11) NOT NULL,
+  PRIMARY KEY (`idUsuario`,`idGenero`),
+  KEY `fk_genero_usuario_genero` (`idGenero`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `genero_usuario`
+-- Volcado de datos para la tabla `genero_usuario`
 --
 
 INSERT INTO `genero_usuario` (`idUsuario`, `idGenero`) VALUES
-(34, 97),
 (32, 98),
-(34, 98),
-(33, 99),
 (32, 100),
-(34, 102),
-(33, 103),
 (32, 104),
 (32, 108),
+(32, 114),
+(33, 99),
+(33, 103),
 (33, 108),
+(33, 110),
+(34, 97),
+(34, 98),
+(34, 102),
 (34, 108),
 (34, 109),
-(33, 110),
 (34, 110),
 (34, 111),
-(32, 114),
 (34, 114),
 (34, 117),
-(34, 119);
+(34, 119),
+(35, 96),
+(35, 103),
+(35, 104),
+(35, 105),
+(36, 102),
+(36, 110),
+(36, 115),
+(36, 116),
+(36, 117);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `libro`
+-- Estructura de tabla para la tabla `libro`
 --
 
-CREATE TABLE `libro` (
-  `idLibro` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `libro` (
+  `idLibro` int(11) NOT NULL AUTO_INCREMENT,
   `idGB` varchar(50) NOT NULL,
   `titulo` varchar(255) NOT NULL,
   `isbn` varchar(50) NOT NULL,
@@ -248,11 +283,14 @@ CREATE TABLE `libro` (
   `idAutor` int(11) NOT NULL,
   `sinopsis` text NOT NULL,
   `nota` tinyint(4) NOT NULL DEFAULT '0',
-  `portada` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `portada` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`idLibro`),
+  KEY `fk_libro_editorial` (`idEditorial`),
+  KEY `fk_libro_autor` (`idAutor`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=237 ;
 
 --
--- Dumping data for table `libro`
+-- Volcado de datos para la tabla `libro`
 --
 
 INSERT INTO `libro` (`idLibro`, `idGB`, `titulo`, `isbn`, `fecha`, `idEditorial`, `idAutor`, `sinopsis`, `nota`, `portada`) VALUES
@@ -293,27 +331,38 @@ INSERT INTO `libro` (`idLibro`, `idGB`, `titulo`, `isbn`, `fecha`, `idEditorial`
 (218, 'Exe_OwAACAAJ', 'Diccionario de sinónimos y antónimos', '9788467021189', '2006', 63, 207, 'Esta obra pone la riqueza de la lengua española, con su inmensa variedad de matices, al alcance de todos los interesados en conocer y mejorar el uso del idioma. En un formato práctico y asequible, ofrece un completo repertorio de voces, procedentes de los principales campos y registros, con sus correspondientes sinónimos y antónimos presentados en forma de listas para facilitar al máximo su búsqueda.- Más de 15.000 entradas y más de 87.000 sinónimos y antónimos del español más actual.- Americanismos, extranjerismos y palabras recién incorporadas a nuestra lengua.', 0, 'http://books.google.com/books/content?id=Exe_OwAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api'),
 (219, 'Ep1dAAAAMAAJ', 'Extranjeros en la noche', 'UOM:39015042551278', '1999', 62, 208, '', 0, 'http://books.google.com/books/content?id=Ep1dAAAAMAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api'),
 (220, 'ppOzMyw0GKcC', 'Oscar y Amanda', 'BNC:1001116299', '1868', 54, 201, '', 0, 'http://books.google.com/books/content?id=ppOzMyw0GKcC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'),
-(221, 'OxI0DwAAQBAJ', 'Rumbo al Mar Blanco', '9788417081317', '2017-09-04', 64, 209, 'Un clásico rescatado de las llamas. En junio de 1944, Malcolm Lowry logró salvar las páginas de la que se convertiría en su más famosa novela, \"Bajo el volcán\". Se creía que \"Rumbo al Mar Blanco\", el manuscrito en el que trabajaba sin descanso, se había perdido en el mismo fuego, pero ahora ha sido descubierto. Lowry vivía en una cabaña de la costa del Pacífico de Canadá, cuando esta se incendió. En un telegrama, el autor explicaba que \"Bajo el volcán\" se había salvado, pero que se había perdido otro libro que iba a ser parte de una trilogía. Se refería a \"Rumbo al Mar Blanco\", una novela con tintes autobiográficos sobre un estudiante de Cambridge que quiere ser novelista pero que está convencido de que su libro y, en cierta manera, su propia vida, ya han sido escritos por un novelista noruego. \"Rumbo al Mar Blanco\" es un trabajo imponente en el que el escritor lucha contra sus demonios y sus propias incertidumbres ideológicas mientras ofrece una visión de la política en los años de entreguerras. Una novela introspectiva y épica a la vez, en la que la magistral prosa del autor se pone al servicio de una obra cautivadora que está llamada a ser un clásico y que, con retraso, llega a nosotros para quedarse. “Todo arde en este inédito extraordinario que, de algún modo, sortea la sucesión de naufragios que contiene.” Le Point', 0, 'http://books.google.com/books/content?id=OxI0DwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'),
+(221, 'OxI0DwAAQBAJ', 'Rumbo al Mar Blanco', '9788417081317', '2017-09-04', 64, 209, 'Un clásico rescatado de las llamas. En junio de 1944, Malcolm Lowry logró salvar las páginas de la que se convertiría en su más famosa novela, "Bajo el volcán". Se creía que "Rumbo al Mar Blanco", el manuscrito en el que trabajaba sin descanso, se había perdido en el mismo fuego, pero ahora ha sido descubierto. Lowry vivía en una cabaña de la costa del Pacífico de Canadá, cuando esta se incendió. En un telegrama, el autor explicaba que "Bajo el volcán" se había salvado, pero que se había perdido otro libro que iba a ser parte de una trilogía. Se refería a "Rumbo al Mar Blanco", una novela con tintes autobiográficos sobre un estudiante de Cambridge que quiere ser novelista pero que está convencido de que su libro y, en cierta manera, su propia vida, ya han sido escritos por un novelista noruego. "Rumbo al Mar Blanco" es un trabajo imponente en el que el escritor lucha contra sus demonios y sus propias incertidumbres ideológicas mientras ofrece una visión de la política en los años de entreguerras. Una novela introspectiva y épica a la vez, en la que la magistral prosa del autor se pone al servicio de una obra cautivadora que está llamada a ser un clásico y que, con retraso, llega a nosotros para quedarse. “Todo arde en este inédito extraordinario que, de algún modo, sortea la sucesión de naufragios que contiene.” Le Point', 0, 'http://books.google.com/books/content?id=OxI0DwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'),
 (222, 'ijZ8DQAAQBAJ', 'Lou Reed era español', '9788416665556', '2016-11-21', 64, 213, 'Bienvenidos al maravilloso mundo de Manuel Vilas y bienvenidos también a los alucinantes viajes de Lou Reed por España. Porque este libro consta de dos historias montadas en una sola película: la del joven Vilas, que experimenta una revelación, una auténtica epifanía, cuando escucha la voz del músico estadounidense en su Barbastro natal durante los franquistas años 70, y la de Lou Reed, que entre concierto y concierto descubre un país oscuro y luminoso, amable y salvaje. Así, en ágil contrapunto, vemos cómo Vilas madura y se enamora, compra discos, acude a actuaciones y visita ciudades saltando de oca en oca. Reed, mientras tanto, habla de forma demencial con camareros, colegas, guardias civiles o amantes, come platos hispánicos, quema kilómetros y canta... sobre todo canta. ¡Vaya voz! A lo largo de estas páginas se recrean las alocadas aventuras y las entrañables desventuras de un poeta y una estrella del rock cuyos caminos nunca llegan a encontrarse: el primero admira al segundo; el segundo se deja admirar desde la altiva distancia del escenario. Lou Reed era español es poema en prosa y prosa musicada. Es recuerdo, drama y comedia. Es la carta de amor de un escritor que logra construir una mitología española donde conviven Machado o Buñuel con Jim Morrison o, por supuesto, Lou Reed. Su literatura es tradición y ruptura, vida y rock and roll. ¡Que empiece la fiesta con su tristeza abismal y su alegría dionisíaca! ¡Que empiece el viaje!', 0, 'http://books.google.com/books/content?id=ijZ8DQAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'),
 (223, '_HXeCgAAQBAJ', 'La invasión de los marcianitos', '9788415996750', '2015-01-01', 64, 214, 'A principios de los años ochenta las ciudades de todo el mundo se vieron invadidas por un ejército de marcianitos dispuestos a librar combates en las pantallas de un sinfín de máquinas de videojuegos. Martin Amis, uno de los escritores británicos más celebrados de la actualidad, se convirtió en un auténtico adicto a esos combates virtuales y recorrió bares, salones recreativos y lugares de lo más variopinto en busca de la última novedad y de nuevos retos. En este libro de culto se relata la experiencia del autor y también se retrata la sociedad de principios de los años ochenta, una época en que la tecnología, la información constante y la fascinación por el espacio empezaron a formar parte de la vida cotidiana de las personas', 0, 'http://books.google.com/books/content?id=_HXeCgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'),
 (224, 'jIHeCgAAQBAJ', 'Sobrebeber', '9788415996163', '2014-01-07', 64, 215, 'Los jugos embriagadores irrumpieron en un mundo apenas estrenado con la castaña del virtuoso Noé y la argucia nefanda tramada por las hijas de Lot para multiplicarse. Ésas fueron las primeras copas y desde entonces han corrido ríos de alcohol por las llanuras literarias (al fin y al cabo, el líquido elemento mana sin pausa como inductor o bálsamo de casi todos las desdichas). Entre los efluvios del siglo XX destaca una cima del pensamiento etílico: Kingsley Amis. La bebida no fue para él una mera contingencia o un complemento de pasiones más hondas, sino una necesidad perentoria, una alegría autónoma y, a menudo, el único argumento de la obra. Amis fue además un maestro de ese humor taimado, lateral e hipotenuso que gastan los caballeros británicos cuando trinchan el pollo, de modo que este libro es el encuentro en la cumbre entre el divino arte de la ironía y una ciencia humana adquirida tras largos años de paciente exploración. Aquí se cruzan la guasa del filósofo y la sapiencia del crápula para impartir doctrina sobre materias de tanta envergadura como la naturaleza ontológica de la resaca, la dieta del beodo, los ardides del tacaño o las fórmulas (seguramente conjeturas) para eludir una borrachera. Aquí se sirve un delicioso cóctel de sosa cáustica y experiencia destilada. Pasen y beban.', 0, 'http://books.google.com/books/content?id=jIHeCgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'),
 (225, 'snXeCgAAQBAJ', 'Llamada perdida', '9788415996767', '2015-01-07', 64, 216, '¿Puede ser la ironía el mejor bisturí para abrir en canal la propia vida? ¿Quiénes son los auténticos herederos de Roberto Bolaño? ¿Cuáles son los límites del pudor? ¿En qué se parecen Corín Tellado e Isabel Allende? ¿Se puede vivir en vida la experiencia radical de la muerte? ¿Qué diablos será eso que llamamos «familia»? Son muchas y muy sorprendentes las preguntas que plantea la escritora Gabriela Wiener en este libro que no se parece a ningún otro. Un libro autobiográfico, político, sincero y radical donde se habla de tríos sexuales, de amigos lejanos, de literatura, de supersticiones numéricas, de una hija y un marido, de España y de Perú. Un libro que se adhiere a la piel del lector como un tatuaje, con ese eco insistente y abstracto de las llamadas perdidas.', 0, 'http://books.google.com/books/content?id=snXeCgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'),
-(226, 'HictDwAAQBAJ', 'Desoriental', '9788417081164', '2017-06-26', 64, 217, 'Tierna, lúcida y ambiciosa, \"Desoriental\" explora los conflictos culturales de las segundas generaciones de aquellos que emigraron a Europa. Por las noches, Kimiâ pincha rock alternativo. Durante el día, sigue un tratamiento de inseminación artificial para poder tener un hijo con su novia Anna. Kimiâ, nacida en Teherán en 1971, se exilió a Francia con su familia, y para poder disfrutar de su libertad, mantuvo las distancias con su cultura de origen. Sin embargo, mientras espera en el hospital, yendo de consulta en consulta, los recuerdos del pasado la invaden. A través de estos recuerdos dispersos, Kimiâ revela la historia de la familia Sadr; desde sus ancestros del norte de Persia, hasta sus propios padres, luchadores eternos contra los sucesivos regímenes políticos que les toca vivir; primero, el del Shah y después el de Jomeini, causante de su huida definitiva de Irán. Por desgracia, la Francia a la que huyen poco tiene que ver con la idealizada versión que se habían imaginado. En una Francia chauvinista y racista, parece que la única salida posible para Kimiâ es su propia «desorientalización». «Desoriental nos cautiva tanto por su fuerza narrativa como por la riqueza de sus temas y el rigor de su mirada crítica.» Christine Rousseau, Le Monde', 0, 'http://books.google.com/books/content?id=HictDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'),
-(227, 'tILeCgAAQBAJ', 'El protegido', '9788415996972', '2015-04-01', 64, 218, 'Jaime es un tipo que se resigna a una vida relativamente anodina. Trabaja en una asesoría fiscal, acaba de separarse, practica una obstinada paternidad con el hijo de otro hombre y tiene una nueva relación condenada al fracaso. Pero ese mundo más o menos previsible se desmorona un día cuando lo turbio y salvaje irrumpe en su vida. Empujado por su sentido del deber, mata a dos individuos (o quizá no) para evitar que lo arrastre la corriente de los acontecimientos. Vivirá el pánico de sentirse perseguido y comprobará que cuenta con recursos hasta entonces impensables. También que la mujer de sus sueños puede ser el amor de su vida.', 0, 'http://books.google.com/books/content?id=tILeCgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api');
+(226, 'HictDwAAQBAJ', 'Desoriental', '9788417081164', '2017-06-26', 64, 217, 'Tierna, lúcida y ambiciosa, "Desoriental" explora los conflictos culturales de las segundas generaciones de aquellos que emigraron a Europa. Por las noches, Kimiâ pincha rock alternativo. Durante el día, sigue un tratamiento de inseminación artificial para poder tener un hijo con su novia Anna. Kimiâ, nacida en Teherán en 1971, se exilió a Francia con su familia, y para poder disfrutar de su libertad, mantuvo las distancias con su cultura de origen. Sin embargo, mientras espera en el hospital, yendo de consulta en consulta, los recuerdos del pasado la invaden. A través de estos recuerdos dispersos, Kimiâ revela la historia de la familia Sadr; desde sus ancestros del norte de Persia, hasta sus propios padres, luchadores eternos contra los sucesivos regímenes políticos que les toca vivir; primero, el del Shah y después el de Jomeini, causante de su huida definitiva de Irán. Por desgracia, la Francia a la que huyen poco tiene que ver con la idealizada versión que se habían imaginado. En una Francia chauvinista y racista, parece que la única salida posible para Kimiâ es su propia «desorientalización». «Desoriental nos cautiva tanto por su fuerza narrativa como por la riqueza de sus temas y el rigor de su mirada crítica.» Christine Rousseau, Le Monde', 0, 'http://books.google.com/books/content?id=HictDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'),
+(227, 'tILeCgAAQBAJ', 'El protegido', '9788415996972', '2015-04-01', 64, 218, 'Jaime es un tipo que se resigna a una vida relativamente anodina. Trabaja en una asesoría fiscal, acaba de separarse, practica una obstinada paternidad con el hijo de otro hombre y tiene una nueva relación condenada al fracaso. Pero ese mundo más o menos previsible se desmorona un día cuando lo turbio y salvaje irrumpe en su vida. Empujado por su sentido del deber, mata a dos individuos (o quizá no) para evitar que lo arrastre la corriente de los acontecimientos. Vivirá el pánico de sentirse perseguido y comprobará que cuenta con recursos hasta entonces impensables. También que la mujer de sus sueños puede ser el amor de su vida.', 0, 'http://books.google.com/books/content?id=tILeCgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'),
+(228, 'roYzDgAAQBAJ', 'Cuatro muertos más para el desierto', '', '2015-11-16', 61, 219, '', 0, 'http://books.google.com/books/content?id=roYzDgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'),
+(229, '4MUyDgAAQBAJ', 'Detrás del águila dorada', '', '2017-01-24', 61, 220, '', 0, 'http://books.google.com/books/content?id=4MUyDgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'),
+(230, 'ZewpAQAAMAAJ', 'Manual de historia de España', 'WISC:89106643596', '1947', 54, 221, '', 0, 'http://books.google.com/books/content?id=ZewpAQAAMAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api'),
+(231, 'a8RRMDKGVg4C', 'Gramática de la lengua catalana', 'BNC:1001405249', '1867', 54, 222, '', 0, 'http://books.google.com/books/content?id=a8RRMDKGVg4C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'),
+(232, 'UV4LAQAAMAAJ', 'Don Juan', 'UVA:X000947976', '1967', 54, 223, '', 0, 'http://books.google.com/books/content?id=UV4LAQAAMAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api'),
+(233, '-CYtDwAAQBAJ', 'Dulceagrio', '9788416665778', '2017-02-27', 64, 224, 'Ostras, champagne, borgoña, cocaína, amistad, lujuria, amor y bares de mala muerte enseñarán a la joven Tess el significado de hacerse mayor en una ciudad como Nueva York. Tess llega a Nueva York en el sofocante verano de 2006. Tiene veintidós años, no conoce a nadie y solo aspira a sobrevivir dignamente en la ciudad. Un día logra encontrar trabajo como camarera en un célebre restaurante de Manhattan y, entonces, todo cambia. Así comienza el año que pasaremos con ella. Nuestra heroína comprueba que no sabe nada. Se equivoca y vuelve a empezar. Experimenta la perplejidad de sentirse atraída por quien no debe. Sus compañeros le parecen fascinantes, casi tanto como la cocaína o el borgoña. Intenta descubrir adónde la lleva cada uno de sus pasos... Los bares de madrugada, las ostras, el paté y ciertos clientes; la confusión y la euforia. "Dulceagrio" es el retrato de un aprendizaje, la historia de un período maravillosamente caótico en la existencia de una joven que no sabe ni por dónde empezar a buscarse. Su entorno despierta lujurias y apetitos (por la comida o el vino, pero también por el conocimiento) que van abriéndole caminos inesperados. ¿Hacia dónde se dirige? En realidad lo ignora, pero ¿acaso no es la incertidumbre una parte ineludible de la vida?', 0, 'http://books.google.com/books/content?id=-CYtDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'),
+(234, 'FCctDwAAQBAJ', 'El vendido', '9788417081119', '2017-05-22', 64, 226, 'La novela sobre los conflictos raciales más entrañable y desternillante jamás escrita logró el Man Booker Prize de 2016. Después de que su padre sea asesinado por la policía, nuestro protagonista, un agricultor urbano y fumador habitual de marihuana, se embarca en un controvertido experimento social: reintroducir la esclavitud en una comunidad afroamericana de la California contemporánea. Por si esto fuera poco, decide también abrazar la causa de reubicar en el mapa a Dickens, su ciudad natal, un villorrio de mala muerte del que no se conserva rastro alguno en ningún mapa de la región y cuyos habitantes ni siquiera son dignos de figurar en el listín telefónico, pues así lo ha decidido el mercado de la especulación inmobiliaria. Con todo, no le falta tiempo para hacer de la segregación racial para con los blancos un arma de motivación, inspiración y superación para la comunidad afroamericana del lugar y de sus vecinos mexicanos, a quienes les une un profundo desprecio por un enemigo común virtual del que ya no tienen noticias. Sobre tan disfuncional y variopinta estampa arranca esta desternillante novela que hizo las delicias del jurado del Man Booker Prize. Una escandalosa tragicomedia que explora el legado de la esclavitud y las desigualdades económicas y raciales de la América actual. Man Booker Prize 2016 «El lector tiene la constante sensación de estar traspasando las fronteras de lo posible y lo permisible. La poesía de sus frases resuena con un vigor que nace de un riguroso auto escrutinio.» The Guardian «Una novela de nuestro tiempo, de un ingenio salvaje que recuerda a las novelas de Jonathan Swift o Mark Twain.» Amanda Foreman, columnista en The Wall Street Journal y The Sunday Times «La novela sobre las razas más perversa publicada en la América de Obama.» The Daily Beast', 0, 'http://books.google.com/books/content?id=FCctDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'),
+(235, '9iYtDwAAQBAJ', 'Tarántula', '9788416665808', '2017-02-20', 64, 227, 'La ópera prima del último premio Nobel y uno de los artistas más influyentes de nuestros días. "Tarántula" es una suerte de lectura iniciática imprescindible para comprender el imaginario dylaniano que puebla sus canciones desde "Bringing It All Back Home","Highway 61 Revisited" y "Blonde on Blonde". Los textos en verso y en prosa que conforman esta aproximación a la escritura automática no están exentos de la musicalidad propia de las composiciones de Dylan de la época ni de las preocupaciones que acompañan al artista en el que posiblemente sea el año más importante de su carrera: cierto inconformismo, una evidente y creciente predilección por el genio verbal y por la espontaneidad, y la firme creencia en la legitimidad de la calle como fuente inagotable de inspiración.', 0, 'http://books.google.com/books/content?id=9iYtDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'),
+(236, 'DictDwAAQBAJ', 'Mamá: tu historia empieza en la cocina', '9788417081041', '2017-04-24', 64, 229, 'Un delicioso viaje a la memoria de nuestro paladar. Este libro nos propone regresar a nuestros orígenes culinarios, al lugar donde se forja nuestra primera relación con los fogones: el hogar. En este recorrido, la autora y periodista Mina Holland reivindica el papel de la comida más allá de la pura supervivencia; la emoción que aporta y la imaginación que supone la composición de un plato y cómo las recetas que heredamos nos ayudan a analizar quiénes somos. Para ello, cuenta con la ayuda y las palabras de chefs como Jamie Oliver, Yotam Ottolengui, Claudia Roden y Elena Arzak, quienes le descubren cuáles son sus herencias culinarias y cómo les han influido. Holland mezcla las recetas de su cotidianidad con sus propios recuerdos, cocinando a fuego lento este delicioso y entretenido libro que nos retrotrae a nuestras propias cocinas. «Las recetas no son meras instrucciones para confeccionar platos. Son parte de nuestras biografías; historias vivas y sólidas, fragmentos fijados en nuestro pasado, al tiempo que crónicas de nuestro presente y nuestro futuro, adaptables y en continua transformación.» Mina Holland «Un libro hermoso y sagaz. Imprescindible para quienes desean averiguar qué y de qué modo comemos. Una joya.» Stanley Tucci', 0, 'http://books.google.com/books/content?id=DictDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `libro_autor`
+-- Estructura de tabla para la tabla `libro_autor`
 --
 
-CREATE TABLE `libro_autor` (
+CREATE TABLE IF NOT EXISTS `libro_autor` (
   `idLibro` int(11) NOT NULL,
-  `idAutor` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `idAutor` int(11) NOT NULL,
+  PRIMARY KEY (`idLibro`,`idAutor`),
+  KEY `fk_libro_autor_autor` (`idAutor`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `libro_autor`
+-- Volcado de datos para la tabla `libro_autor`
 --
 
 INSERT INTO `libro_autor` (`idLibro`, `idAutor`) VALUES
@@ -328,13 +377,13 @@ INSERT INTO `libro_autor` (`idLibro`, `idAutor`) VALUES
 (192, 183),
 (193, 184),
 (194, 185),
-(197, 185),
-(201, 185),
 (195, 186),
 (196, 187),
+(197, 185),
 (198, 188),
 (199, 189),
 (200, 190),
+(201, 185),
 (202, 191),
 (203, 192),
 (204, 193),
@@ -346,7 +395,6 @@ INSERT INTO `libro_autor` (`idLibro`, `idAutor`) VALUES
 (210, 199),
 (211, 200),
 (212, 201),
-(220, 201),
 (213, 202),
 (214, 203),
 (215, 204),
@@ -354,6 +402,7 @@ INSERT INTO `libro_autor` (`idLibro`, `idAutor`) VALUES
 (217, 206),
 (218, 207),
 (219, 208),
+(220, 201),
 (221, 209),
 (221, 210),
 (221, 211),
@@ -363,231 +412,73 @@ INSERT INTO `libro_autor` (`idLibro`, `idAutor`) VALUES
 (224, 215),
 (225, 216),
 (226, 217),
-(227, 218);
+(227, 218),
+(228, 219),
+(229, 220),
+(230, 221),
+(231, 222),
+(232, 223),
+(233, 224),
+(233, 225),
+(234, 226),
+(235, 227),
+(235, 228),
+(236, 229),
+(236, 230);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `libro_lista`
+-- Estructura de tabla para la tabla `libro_lista`
 --
 
-CREATE TABLE `libro_lista` (
+CREATE TABLE IF NOT EXISTS `libro_lista` (
   `idLibro` int(11) NOT NULL,
-  `idLista` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `lista`
---
-
-CREATE TABLE `lista` (
   `idLista` int(11) NOT NULL,
-  `idUsuario` int(11) NOT NULL,
-  `nombre` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`idLibro`,`idLista`),
+  KEY `fk_libro_lista_lista` (`idLista`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `usuario`
+-- Estructura de tabla para la tabla `lista`
 --
 
-CREATE TABLE `usuario` (
+CREATE TABLE IF NOT EXISTS `lista` (
+  `idLista` int(11) NOT NULL AUTO_INCREMENT,
   `idUsuario` int(11) NOT NULL,
+  `nombre` varchar(50) NOT NULL,
+  PRIMARY KEY (`idLista`),
+  KEY `fk_lista_usuario` (`idUsuario`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `usuario`
+--
+
+CREATE TABLE IF NOT EXISTS `usuario` (
+  `idUsuario` int(11) NOT NULL AUTO_INCREMENT,
   `usuario` varchar(15) NOT NULL,
   `password` varchar(33) NOT NULL,
   `nombre` varchar(100) NOT NULL,
   `apellidos` varchar(100) NOT NULL,
-  `email` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `email` varchar(100) NOT NULL,
+  PRIMARY KEY (`idUsuario`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=37 ;
 
 --
--- Dumping data for table `usuario`
+-- Volcado de datos para la tabla `usuario`
 --
 
 INSERT INTO `usuario` (`idUsuario`, `usuario`, `password`, `nombre`, `apellidos`, `email`) VALUES
 (32, 'angytambien', 'ecad7e4788f8b9ace0fa3e04bd3a37a9', 'Ángeles', 'Bueno Aguilar', 'angy@email.com'),
-(33, 'sorayach82', 'ecad7e4788f8b9ace0fa3e04bd3a37a9', 'Soraya', 'Cubino Hernández', 'soretus@sorus.es'),
-(34, 'severussnape', 'e08ee230cb476611225987aba4d101f9', 'Severus', 'Snape', 'severus@apple.com');
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `autor`
---
-ALTER TABLE `autor`
-  ADD PRIMARY KEY (`idAutor`);
-
---
--- Indexes for table `comentario`
---
-ALTER TABLE `comentario`
-  ADD PRIMARY KEY (`idComentario`),
-  ADD KEY `fk_comentario_libro` (`idLibro`),
-  ADD KEY `fk_comentario_usuario` (`idusuario`);
-
---
--- Indexes for table `editorial`
---
-ALTER TABLE `editorial`
-  ADD PRIMARY KEY (`idEditorial`);
-
---
--- Indexes for table `favoritos`
---
-ALTER TABLE `favoritos`
-  ADD PRIMARY KEY (`idUsuario`,`idLibro`),
-  ADD KEY `fk_favoritos_libro` (`idLibro`);
-
---
--- Indexes for table `genero`
---
-ALTER TABLE `genero`
-  ADD PRIMARY KEY (`idGenero`);
-
---
--- Indexes for table `genero_usuario`
---
-ALTER TABLE `genero_usuario`
-  ADD PRIMARY KEY (`idUsuario`,`idGenero`),
-  ADD KEY `fk_genero_usuario_genero` (`idGenero`);
-
---
--- Indexes for table `libro`
---
-ALTER TABLE `libro`
-  ADD PRIMARY KEY (`idLibro`),
-  ADD KEY `fk_libro_editorial` (`idEditorial`),
-  ADD KEY `fk_libro_autor` (`idAutor`);
-
---
--- Indexes for table `libro_autor`
---
-ALTER TABLE `libro_autor`
-  ADD PRIMARY KEY (`idLibro`,`idAutor`),
-  ADD KEY `fk_libro_autor_autor` (`idAutor`);
-
---
--- Indexes for table `libro_lista`
---
-ALTER TABLE `libro_lista`
-  ADD PRIMARY KEY (`idLibro`,`idLista`),
-  ADD KEY `fk_libro_lista_lista` (`idLista`);
-
---
--- Indexes for table `lista`
---
-ALTER TABLE `lista`
-  ADD PRIMARY KEY (`idLista`),
-  ADD KEY `fk_lista_usuario` (`idUsuario`);
-
---
--- Indexes for table `usuario`
---
-ALTER TABLE `usuario`
-  ADD PRIMARY KEY (`idUsuario`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `autor`
---
-ALTER TABLE `autor`
-  MODIFY `idAutor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=219;
-
---
--- AUTO_INCREMENT for table `comentario`
---
-ALTER TABLE `comentario`
-  MODIFY `idComentario` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `editorial`
---
-ALTER TABLE `editorial`
-  MODIFY `idEditorial` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
-
---
--- AUTO_INCREMENT for table `genero`
---
-ALTER TABLE `genero`
-  MODIFY `idGenero` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=120;
-
---
--- AUTO_INCREMENT for table `libro`
---
-ALTER TABLE `libro`
-  MODIFY `idLibro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=228;
-
---
--- AUTO_INCREMENT for table `lista`
---
-ALTER TABLE `lista`
-  MODIFY `idLista` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `usuario`
---
-ALTER TABLE `usuario`
-  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `comentario`
---
-ALTER TABLE `comentario`
-  ADD CONSTRAINT `fk_comentario_libro` FOREIGN KEY (`idLibro`) REFERENCES `libro` (`idLibro`),
-  ADD CONSTRAINT `fk_comentario_usuario` FOREIGN KEY (`idusuario`) REFERENCES `usuario` (`idUsuario`);
-
---
--- Constraints for table `favoritos`
---
-ALTER TABLE `favoritos`
-  ADD CONSTRAINT `fk_favoritos_libro` FOREIGN KEY (`idLibro`) REFERENCES `libro` (`idLibro`),
-  ADD CONSTRAINT `fk_favoritos_usuario` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`);
-
---
--- Constraints for table `genero_usuario`
---
-ALTER TABLE `genero_usuario`
-  ADD CONSTRAINT `fk_genero_usuario_genero` FOREIGN KEY (`idGenero`) REFERENCES `genero` (`idGenero`),
-  ADD CONSTRAINT `fk_genero_usuario_usuario` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`);
-
---
--- Constraints for table `libro`
---
-ALTER TABLE `libro`
-  ADD CONSTRAINT `fk_libro_autor` FOREIGN KEY (`idAutor`) REFERENCES `autor` (`idAutor`),
-  ADD CONSTRAINT `fk_libro_editorial` FOREIGN KEY (`idEditorial`) REFERENCES `editorial` (`idEditorial`);
-
---
--- Constraints for table `libro_autor`
---
-ALTER TABLE `libro_autor`
-  ADD CONSTRAINT `fk_libro_autor_autor` FOREIGN KEY (`idAutor`) REFERENCES `autor` (`idAutor`),
-  ADD CONSTRAINT `fk_libro_autor_libro` FOREIGN KEY (`idLibro`) REFERENCES `libro` (`idLibro`);
-
---
--- Constraints for table `libro_lista`
---
-ALTER TABLE `libro_lista`
-  ADD CONSTRAINT `fk_libro_lista_libro` FOREIGN KEY (`idLibro`) REFERENCES `libro` (`idLibro`),
-  ADD CONSTRAINT `fk_libro_lista_lista` FOREIGN KEY (`idLista`) REFERENCES `lista` (`idLista`);
-
---
--- Constraints for table `lista`
---
-ALTER TABLE `lista`
-  ADD CONSTRAINT `fk_lista_usuario` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`);
+(33, 'sorayach82', 'ecad7e4788f8b9ace0fa3e04bd3a37a9', 'Soraya', 'Cubino Hernández', 'pepitachula@sorus.es'),
+(34, 'severussnape', 'e08ee230cb476611225987aba4d101f9', 'Severus', 'Snape', 'severus@apple.com'),
+(35, 'pepegil', '5e783f68bbe280088d77a82cbd235a0d', 'Pepe', 'Gil Robles', 'pepe@email.com'),
+(36, 'luciaflores97', '925cdd5132faf828d1adecae6862bacd', 'Lucía', 'Flores Padilla', 'lucia@gmail.com');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
