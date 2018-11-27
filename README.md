@@ -5,4 +5,4 @@ Aplicación web PHP para la consulta de libros previamente adquiridos de la API 
 
 ## Haz click <a href="http://libroteca.epizy.com" target="blank">aquí</a> para acceder a la aplicación.
 
-<img src="capturas/index.jpeg"/>
+<img src="capturas/index.jpg"/>
